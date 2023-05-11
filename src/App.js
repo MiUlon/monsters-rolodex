@@ -6,7 +6,11 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      name: 'MindaugasState'
+      name: {
+        firstName: 'MindaugasFirstState',
+        lastName: 'MindaugasLastState'
+      },
+      company: 'MiU freelancer state'
     }
   }
 
@@ -15,8 +19,11 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>Hi, { this.state.name }!</p>
-          <button onClick={ () => { this.setState({ name: 'MindaugasOnClick'} ) } }>Change Name</button>
+          <p>Hi, my name is { this.state.name.firstName } { this.state.name.lastName }! I work at { this.state.company }.</p>
+          <button onClick={ () => { 
+            this.setState({ name: { firstName: 'MindaugasFirstOnClick', lastName: 'MindaugasLastOnClick' }}, this.setState({company: 'MiU freelancer onClick'}) ) } }>
+              Change Name
+          </button>
         </header>
       </div>
     );
