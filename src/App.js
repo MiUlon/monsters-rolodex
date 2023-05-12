@@ -1,35 +1,35 @@
 import { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      name: {
-        firstName: 'MindaugasFirstState',
-        lastName: 'MindaugasLastState'
-      },
-      company: 'MiU freelancer state'
+      monsters: [
+        {
+          name: 'Mindaugas0'
+        },
+        {
+          name: 'Mindauags1'
+        },
+        {
+          name: 'Mindaugas2'
+        },
+        {
+          name: 'Mindaugas3'
+        }
+      ]
     }
   }
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>Hi, my name is { this.state.name.firstName } { this.state.name.lastName }! I work at { this.state.company }.</p>
-          <button onClick={ () => { 
-            this.setState( () => { 
-              return {
-                name: { firstName: 'MindaugasFirstOnClick', lastName: 'MindaugasLastOnClick' },
-                company: 'MiU freelancer onClick' }}, 
-              () => { console.log(this.state) } 
-              ) } }>
-              Change Name
-          </button>
-        </header>
+        {
+          this.state.monsters.map((monster) => {
+            return <h1>{monster.name}</h1>
+          })
+        }
       </div>
     );
   }
