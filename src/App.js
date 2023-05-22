@@ -28,10 +28,13 @@ class App extends Component {
       <div className="App">
         <input className='search-box' type='search' placeholder='Search monsters' onChange={(event) => {
           console.log(event.target.value)
-          this.state.monsters.filter((monster) => {
-          if (monster.name.toLowerCase().includes(event.target.value)) {
-            return <h1>{monster.name}</h1>
-          }})
+          const searchString = event.target.value.toLocaleLowerCase();
+          const filteredMonsters = this.state.monsters.filter((monster) => {
+            return monster.name.toLocaleLowerCase().includes(searchString);
+          })
+          this.setState(() => {
+            return { monsters: filteredMonsters }
+          })
         }}/>
 
         {
