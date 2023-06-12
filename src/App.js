@@ -1,52 +1,39 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import CardList from './components/card-list/card-list.components';
 import SearchBox from './components/search-box/search-box.components';
 import './App.css';
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      monsters: [],
-      searchField: ''
-    }
-  }
+const App = () => {
+  const [searchField, setSearchField] = useState('');
+  const [monsters, setMonsters] = useState([]);
 
-  componentDidMount = () => {
+  useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(response => response.json())
-      .then(user => this.setState(() => {
-          return {
-            monsters: user
-          }
-      }
-    ))
-  }
+      .then((users) => setMonsters(users))
+  }, []);
 
-  onSearchFieldChange = (event) => {
-    const searchField = event.target.value.toLocaleLowerCase();
-      this.setState(() => {
-        return { searchField }
-    })      
+  const onSearchFieldChange = (event) => {
+    const searchFieldString = event.target.value.toLocaleLowerCase();
+    setSearchField(searchFieldString);
   };
 
-  render() {
+  const filteredMonsters = monsters.filter((monster) => {
+    return monster.name.toLocaleLowerCase().includes(searchField);
+  })
 
-    const { monsters, searchField } = this.state;
-    const { onSearchFieldChange } = this;
+  return (
+    <div className='App'>
+      <h1 className='app-title'>Monsters Rolodex</h1>
 
-    const filteredMonsters = monsters.filter((monster) => {
-      return monster.name.toLocaleLowerCase().includes(searchField);
-    })
-
-    return (
-      <div className="App">
-        <h1 className='app-title'>Monsters Rolodex</h1>
-        <SearchBox className='monster-search-box' placeholder='Search monsters' onSearchFieldChange={onSearchFieldChange}/>
-        <CardList monsters={filteredMonsters}/>
-      </div>
-    );
-  }
+      <SearchBox 
+        className='monsters-search-box'
+        onSearchFieldChange={onSearchFieldChange}
+        placeholder='Search Monsters'
+      />
+      <CardList monsters={filteredMonsters}/>
+    </div>
+  )
 }
   
 
